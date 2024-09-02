@@ -7,14 +7,17 @@
 #include <string>
 #include <functional>
 #include "NexisLogger.h"
+#include "PluginStructs.h"
+
+#include "Interfaces/Events/Before/BeforeCleanTask.h"
 
 class LifecycleExecuter {
 private:
     nexis::NexisLogger * logger;
-    std::map<std::string, std::vector<std::shared_ptr<void>>> plugins;
+    PluginStruct plugins;
     
     int clean();
-    int start();
+    int run();
     int validate();
     int compile();
     int test();
@@ -23,7 +26,7 @@ private:
     
     struct LifecycleTasks {
         bool clean    = false;
-        bool start    = false;
+        bool run      = false;
         bool validate = false;
         bool compile  = false;
         bool test     = false;
@@ -33,11 +36,9 @@ private:
 
     LifecycleTasks getLifecycleTasks(int cycleTasks);
 
-    int executeTask(std::string &taskName, std::function<int(void*)> functionName);
-
     
 public:
-    LifecycleExecuter(std::map<std::string, std::vector<std::shared_ptr<void>>> plugins, nexis::NexisLogger * logger);
+    LifecycleExecuter(PluginStruct plugins, nexis::NexisLogger * logger);
     ~LifecycleExecuter();
     
     int startLifecycle(int cycleTasks);
