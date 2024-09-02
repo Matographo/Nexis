@@ -5,7 +5,7 @@
 class CompileTask {
 public:
     virtual ~CompileTask() = 0;
-    virtual void compile() = 0;
+    virtual int compile() = 0;
 };
 
 

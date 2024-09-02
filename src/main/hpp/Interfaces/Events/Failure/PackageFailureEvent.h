@@ -5,7 +5,7 @@
 class PackageFailureEvent {
 public:
     virtual ~PackageFailureEvent() = 0;
-    virtual void onPackageFailure() = 0;
+    virtual int onPackageFailure() = 0;
 };
 
 

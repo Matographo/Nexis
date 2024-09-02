@@ -5,7 +5,7 @@
 class AfterPackageTask {
 public:
     virtual ~AfterPackageTask() = 0;
-    virtual void afterPackage() = 0;
+    virtual int afterPackage() = 0;
 };
 
 

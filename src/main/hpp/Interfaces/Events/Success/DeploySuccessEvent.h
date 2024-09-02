@@ -5,7 +5,7 @@
 class DeploySuccessEvent {
 public:
     virtual ~DeploySuccessEvent() = 0;
-    virtual void onDeploySuccess() = 0;
+    virtual int onDeploySuccess() = 0;
 };
 
 

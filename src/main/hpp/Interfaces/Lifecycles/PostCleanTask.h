@@ -5,7 +5,7 @@
 class PostCleanTask {
 public:
     virtual ~PostCleanTask() = 0;
-    virtual void postClean() = 0;
+    virtual int postClean() = 0;
 };
 
 

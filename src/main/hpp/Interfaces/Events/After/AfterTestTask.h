@@ -5,7 +5,7 @@
 class AfterTestTask {
 public:
     virtual ~AfterTestTask() = 0;
-    virtual void afterTest() = 0;
+    virtual int afterTest() = 0;
 };
 
 

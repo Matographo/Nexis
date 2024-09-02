@@ -5,7 +5,7 @@
 class PreTestTask {
 public:
     virtual ~PreTestTask() = 0;
-    virtual void preTest() = 0;
+    virtual int preTest() = 0;
 };
 
 

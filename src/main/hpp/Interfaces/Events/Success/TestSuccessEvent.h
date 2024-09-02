@@ -5,7 +5,7 @@
 class TestSuccessEvent {
 public:
     virtual ~TestSuccessEvent() = 0;
-    virtual void onTestSuccess() = 0;
+    virtual int onTestSuccess() = 0;
 };
 
 

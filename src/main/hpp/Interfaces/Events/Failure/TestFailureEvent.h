@@ -5,7 +5,7 @@
 class TestFailureEvent {
 public:
     virtual ~TestFailureEvent() = 0;
-    virtual void onTestFailure() = 0;
+    virtual int onTestFailure() = 0;
 };
 
 

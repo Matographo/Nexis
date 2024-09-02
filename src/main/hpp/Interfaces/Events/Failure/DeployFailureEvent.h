@@ -5,7 +5,7 @@
 class DeployFailureEvent {
 public:
     virtual ~DeployFailureEvent() = 0;
-    virtual void onDeployFailure() = 0;
+    virtual int onDeployFailure() = 0;
 };
 
 

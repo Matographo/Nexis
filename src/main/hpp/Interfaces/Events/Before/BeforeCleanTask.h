@@ -5,7 +5,7 @@
 class BeforeCleanTask {
 public:
     virtual ~BeforeCleanTask() = 0;
-    virtual void beforeClean() = 0;
+    virtual int beforeClean() = 0;
 };
 
 #endif

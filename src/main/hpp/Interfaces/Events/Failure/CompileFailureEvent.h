@@ -5,7 +5,7 @@
 class CompileFailureEvent {
 public:
     virtual ~CompileFailureEvent() = 0;
-    virtual void onCompileFailure() = 0;
+    virtual int onCompileFailure() = 0;
 };
 
 

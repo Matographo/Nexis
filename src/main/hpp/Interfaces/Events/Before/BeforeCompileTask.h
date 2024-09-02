@@ -5,7 +5,7 @@
 class BeforeCompileTask {
 public:
     virtual ~BeforeCompileTask() = 0;
-    virtual void beforeCompile() = 0;
+    virtual int beforeCompile() = 0;
 };
 
 

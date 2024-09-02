@@ -5,7 +5,7 @@
 class AfterDeployTask {
 public:
     virtual ~AfterDeployTask() = 0;
-    virtual void afterDeploy() = 0;
+    virtual int afterDeploy() = 0;
 };
 
 

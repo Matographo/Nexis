@@ -5,7 +5,7 @@
 class PreCleanTask {
 public:
     virtual ~PreCleanTask() = 0;
-    virtual void preClean() = 0;
+    virtual int preClean() = 0;
 };
 
 

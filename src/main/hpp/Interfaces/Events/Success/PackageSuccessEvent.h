@@ -5,7 +5,7 @@
 class PackageSuccessEvent {
 public:
     virtual ~PackageSuccessEvent() = 0;
-    virtual void onPackageSuccess() = 0;
+    virtual int onPackageSuccess() = 0;
 };
 
 

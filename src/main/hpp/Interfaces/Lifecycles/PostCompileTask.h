@@ -5,7 +5,7 @@
 class PostCompileTask {
 public:
     virtual ~PostCompileTask() = 0;
-    virtual void postCompile() = 0;
+    virtual int postCompile() = 0;
 };
 
 

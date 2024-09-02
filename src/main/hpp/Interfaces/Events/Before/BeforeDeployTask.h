@@ -5,7 +5,7 @@
 class BeforeDeployTask {
 public:
     virtual ~BeforeDeployTask() = 0;
-    virtual void beforeDeploy() = 0;
+    virtual int beforeDeploy() = 0;
 };
 
 

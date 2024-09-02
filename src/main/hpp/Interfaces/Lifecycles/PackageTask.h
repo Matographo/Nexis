@@ -5,7 +5,7 @@
 class PackageTask {
 public:
     virtual ~PackageTask() = 0;
-    virtual void package() = 0;
+    virtual int package() = 0;
 };
 
 

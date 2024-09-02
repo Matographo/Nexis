@@ -5,7 +5,7 @@
 class PostDeployTask {
 public:
     virtual ~PostDeployTask() = 0;
-    virtual void postDeploy() = 0;
+    virtual int postDeploy() = 0;
 };
 
 

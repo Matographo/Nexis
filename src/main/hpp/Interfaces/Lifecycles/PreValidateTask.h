@@ -5,7 +5,7 @@
 class PreValidateTask {
 public:
     virtual ~PreValidateTask() = 0;
-    virtual void preValidate() = 0;
+    virtual int preValidate() = 0;
 };
 
 

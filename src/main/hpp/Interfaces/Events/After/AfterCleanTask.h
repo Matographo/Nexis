@@ -5,7 +5,7 @@
 class AfterCleanTask {
 public:
     virtual ~AfterCleanTask() = 0;
-    virtual void afterClean() = 0;
+    virtual int afterClean() = 0;
 };
 
 

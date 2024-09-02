@@ -5,7 +5,7 @@
 class TestTask {
 public:
     virtual ~TestTask() = 0;
-    virtual void test() = 0;
+    virtual int test() = 0;
 };
 
 

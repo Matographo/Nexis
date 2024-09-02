@@ -6,7 +6,7 @@
 
 class TransformLifecycle : public ValidateTask, public CompileTask {
 public:
-    ~TransformLifecycle();
+    ~TransformLifecycle() = 0;
 };
 
 #endif

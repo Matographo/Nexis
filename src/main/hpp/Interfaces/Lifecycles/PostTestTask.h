@@ -5,7 +5,7 @@
 class PostTestTask {
 public:
     virtual ~PostTestTask() = 0;
-    virtual void postTest() = 0;
+    virtual int postTest() = 0;
 };
 
 

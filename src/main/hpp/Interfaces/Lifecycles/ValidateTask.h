@@ -5,7 +5,7 @@
 class ValidateTask {
 public:
     virtual ~ValidateTask() = 0;
-    virtual void validate() = 0;
+    virtual int validate() = 0;
 };
 
 

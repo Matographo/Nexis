@@ -5,7 +5,7 @@
 class BeforePackageTask {
 public:
     virtual ~BeforePackageTask() = 0;
-    virtual void beforePackage() = 0;
+    virtual int beforePackage() = 0;
 };
 
 

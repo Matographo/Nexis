@@ -5,7 +5,7 @@
 class CompileSuccessEvent {
 public:
     virtual ~CompileSuccessEvent() = 0;
-    virtual void onCompileSuccess() = 0;
+    virtual int onCompileSuccess() = 0;
 };
 
 

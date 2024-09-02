@@ -5,7 +5,7 @@
 class PostPackageTask {
 public:
     virtual ~PostPackageTask() = 0;
-    virtual void postPackage() = 0;
+    virtual int postPackage() = 0;
 };
 
 

@@ -5,7 +5,7 @@
 class BeforeTestTask {
 public:
     virtual ~BeforeTestTask() = 0;
-    virtual void beforeTest() = 0;
+    virtual int beforeTest() = 0;
 };
 
 

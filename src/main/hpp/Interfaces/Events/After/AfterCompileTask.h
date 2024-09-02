@@ -5,7 +5,7 @@
 class AfterCompileTask {
 public:
     virtual ~AfterCompileTask() = 0;
-    virtual void afterCompile() = 0;
+    virtual int afterCompile() = 0;
 };
 
 

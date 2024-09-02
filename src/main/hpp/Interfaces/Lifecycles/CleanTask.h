@@ -5,7 +5,7 @@
 class CleanTask {
 public:
     virtual ~CleanTask() = 0;
-    virtual void clean() = 0;
+    virtual int clean() = 0;
 };
 
 
