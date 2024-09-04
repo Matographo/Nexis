@@ -1,0 +1,5 @@
+projectName: Nexis
+
+logger:
+  level: debug                # Log-Level (trace, debug, info, warn, error, critical)
+  format: "[%Y-%m-%d %H:%M:%S] [%l] %^%v%$"  # Format der Log-Ausgabe

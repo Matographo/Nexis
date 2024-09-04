@@ -60,6 +60,75 @@
 #include "PostValidateTask.h"
 
 
+struct CleanTasks {
+    std::vector<CleanTask*> cleanTask;
+    std::vector<BeforeCleanTask*> beforeCleanTask;
+    std::vector<AfterCleanTask*> afterCleanTask;
+    std::vector<CleanSuccessEvent*> cleanSuccessEvent;
+    std::vector<CleanFailureEvent*> cleanFailureEvent;
+    std::vector<PreCleanTask*> preCleanTask;
+    std::vector<PostCleanTask*> postCleanTask;
+};
+
+struct CompileTasks {
+    std::vector<CompileTask*> compileTask;
+    std::vector<BeforeCompileTask*> beforeCompileTask;
+    std::vector<AfterCompileTask*> afterCompileTask;
+    std::vector<CompileSuccessEvent*> compileSuccessEvent;
+    std::vector<CompileFailureEvent*> compileFailureEvent;
+    std::vector<PreCompileTask*> preCompileTask;
+    std::vector<PostCompileTask*> postCompileTask;
+};
+
+struct TestTasks {
+    std::vector<TestTask*> testTask;
+    std::vector<BeforeTestTask*> beforeTestTask;
+    std::vector<AfterTestTask*> afterTestTask;
+    std::vector<TestSuccessEvent*> testSuccessEvent;
+    std::vector<TestFailureEvent*> testFailureEvent;
+    std::vector<PreTestTask*> preTestTask;
+    std::vector<PostTestTask*> postTestTask;
+};
+
+struct PackageTasks {
+    std::vector<PackageTask*> packageTask;
+    std::vector<BeforePackageTask*> beforePackageTask;
+    std::vector<AfterPackageTask*> afterPackageTask;
+    std::vector<PackageSuccessEvent*> packageSuccessEvent;
+    std::vector<PackageFailureEvent*> packageFailureEvent;
+    std::vector<PrePackageTask*> prePackageTask;
+    std::vector<PostPackageTask*> postPackageTask;
+};
+
+struct DeployTasks {
+    std::vector<DeployTask*> deployTask;
+    std::vector<BeforeDeployTask*> beforeDeployTask;
+    std::vector<AfterDeployTask*> afterDeployTask;
+    std::vector<DeploySuccessEvent*> deploySuccessEvent;
+    std::vector<DeployFailureEvent*> deployFailureEvent;
+    std::vector<PreDeployTask*> preDeployTask;
+    std::vector<PostDeployTask*> postDeployTask;
+};
+
+struct RunTasks {
+    std::vector<RunTask*> runTask;
+    std::vector<BeforeRunTask*> beforeRunTask;
+    std::vector<AfterRunTask*> afterRunTask;
+    std::vector<RunSuccessEvent*> runSuccessEvent;
+    std::vector<RunFailureEvent*> runFailureEvent;
+    std::vector<PreRunTask*> preRunTask;
+    std::vector<PostRunTask*> postRunTask;
+};
+
+struct ValidateTasks {
+    std::vector<ValidateTask*> validateTask;
+    std::vector<BeforeValidateTask*> beforeValidateTask;
+    std::vector<AfterValidateTask*> afterValidateTask;
+    std::vector<ValidateSuccessEvent*> validateSuccessEvent;
+    std::vector<ValidateFailureEvent*> validateFailureEvent;
+    std::vector<PreValidateTask*> preValidateTask;
+    std::vector<PostValidateTask*> postValidateTask;
+};
 
 struct PluginStruct {
     CleanTasks cleanTasks;
@@ -71,75 +140,6 @@ struct PluginStruct {
     RunTasks runTasks;
 };
 
-struct CleanTasks {
-    std::vector<CleanTask> cleanTask;
-    std::vector<BeforeCleanTask> beforeCleanTask;
-    std::vector<AfterCleanTask> afterCleanTask;
-    std::vector<CleanSuccessEvent> cleanSuccessEvent;
-    std::vector<CleanFailureEvent> cleanFailureEvent;
-    std::vector<PreCleanTask> preCleanTask;
-    std::vector<PostCleanTask> postCleanTask;
-};
-
-struct CompileTasks {
-    std::vector<CompileTask> compileTask;
-    std::vector<BeforeCompileTask> beforeCompileTask;
-    std::vector<AfterCompileTask> afterCompileTask;
-    std::vector<CompileSuccessEvent> compileSuccessEvent;
-    std::vector<CompileFailureEvent> compileFailureEvent;
-    std::vector<PreCompileTask> preCompileTask;
-    std::vector<PostCompileTask> postCompileTask;
-};
-
-struct TestTasks {
-    std::vector<TestTask> testTask;
-    std::vector<BeforeTestTask> beforeTestTask;
-    std::vector<AfterTestTask> afterTestTask;
-    std::vector<TestSuccessEvent> testSuccessEvent;
-    std::vector<TestFailureEvent> testFailureEvent;
-    std::vector<PreTestTask> preTestTask;
-    std::vector<PostTestTask> postTestTask;
-};
-
-struct PackageTasks {
-    std::vector<PackageTask> packageTask;
-    std::vector<BeforePackageTask> beforePackageTask;
-    std::vector<AfterPackageTask> afterPackageTask;
-    std::vector<PackageSuccessEvent> packageSuccessEvent;
-    std::vector<PackageFailureEvent> packageFailureEvent;
-    std::vector<PrePackageTask> prePackageTask;
-    std::vector<PostPackageTask> postPackageTask;
-};
-
-struct DeployTasks {
-    std::vector<DeployTask> deployTask;
-    std::vector<BeforeDeployTask> beforeDeployTask;
-    std::vector<AfterDeployTask> afterDeployTask;
-    std::vector<DeploySuccessEvent> deploySuccessEvent;
-    std::vector<DeployFailureEvent> deployFailureEvent;
-    std::vector<PreDeployTask> preDeployTask;
-    std::vector<PostDeployTask> postDeployTask;
-};
-
-struct RunTasks {
-    std::vector<RunTask> runTask;
-    std::vector<BeforeRunTask> beforeRunTask;
-    std::vector<AfterRunTask> afterRunTask;
-    std::vector<RunSuccessEvent> runSuccessEvent;
-    std::vector<RunFailureEvent> runFailureEvent;
-    std::vector<PreRunTask> preRunTask;
-    std::vector<PostRunTask> postRunTask;
-};
-
-struct ValidateTasks {
-    std::vector<ValidateTask> validateTask;
-    std::vector<BeforeValidateTask> beforeValidateTask;
-    std::vector<AfterValidateTask> afterValidateTask;
-    std::vector<ValidateSuccessEvent> validateSuccessEvent;
-    std::vector<ValidateFailureEvent> validateFailureEvent;
-    std::vector<PreValidateTask> preValidateTask;
-    std::vector<PostValidateTask> postValidateTask;
-};
 
 
 #endif

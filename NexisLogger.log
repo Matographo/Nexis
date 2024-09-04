@@ -1,3 +1,21 @@
-Starting Nexis...
-Nexis ended.
-Total time: 0 ms
+
+------------------------------------------------------------------------
+| Starting Nexis Build...
+------------------------------------------------------------------------
+
+Reading build.yaml...
+Loading plugins...
+Plugins loaded.
+Executing tasks...
+Starting lifecycle...
+Starting lifecycle tasks...
+Lifecycle tasks completed.
+Lifecycle ended.
+Tasks executed.
+
+--------------------
+| BUILD SUCCESSFUL |
+------------------------------------------------------------------------
+| Total time: 2282 ms
+------------------------------------------------------------------------
+

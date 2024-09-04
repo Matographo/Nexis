@@ -38,7 +38,7 @@ private:
 
     
 public:
-    LifecycleExecuter(PluginStruct plugins, nexis::NexisLogger * logger);
+    LifecycleExecuter(PluginStruct * plugins, nexis::NexisLogger * logger);
     ~LifecycleExecuter();
     
     int startLifecycle(int cycleTasks);
