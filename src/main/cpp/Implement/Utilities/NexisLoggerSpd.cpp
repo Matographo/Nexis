@@ -1,4 +1,4 @@
-#include "NexisLoggerSpd.h"
+#include "Interfaces/Utilities/NexisLoggerSpd.h"
 
 nexis::NexisLoggerSpd::NexisLoggerSpd(const std::string logName, const std::string logFormat, const std::string logLevel) {
     // Erstelle den Konsolen-Sink (mit Farben)
@@ -50,26 +50,77 @@ void nexis::NexisLoggerSpd::crit(const std::string& message) {
 }
 
 
-void nexis::NexisLoggerSpd::setConfig(DataObject config) {
-    if(config.isDictionary() && config.hasKey("logger")) {
-        DataObject * loggerConfig = &config.asDictionary()["logger"];
-        if(loggerConfig->isDictionary()) {
-
-            if(loggerConfig->hasKey("level") && loggerConfig->asDictionary()["level"].isString()) {
-                std::string level = loggerConfig->asDictionary()["level"].asString();
-                if(level == "trace" || level == "debug" || level == "info" || level == "warn" || level == "error" || level == "critical") {
-                    this->nexisLogger->set_level(spdlog::level::from_str(level));
-                } else {
-                    this->warn("Invalid log level: " + level);
-                }
+void nexis::NexisLoggerSpd::setConfig(DataObject * config) {
+    if(config->hasKey("level") && config->asDictionary()["level"].isString()) {
+        std::string level = config->asDictionary()["level"].asString();
+        if(level == "trace" || level == "debug" || level == "info" || level == "warn" || level == "error" || level == "critical") {
+            this->nexisLogger->set_level(spdlog::level::from_str(level));
+        } else {
+            this->warn("Invalid log level: " + level);
+        }
+    }
+    
+    if(config->hasKey("format") && config->asDictionary()["format"].isString()) {
+        std::string format = config->asDictionary()["format"].asString();
+        try {
+            this->nexisLogger->set_pattern(format);
+        } catch (const spdlog::spdlog_ex &ex) {
+            this->warn("Invalid log format: " + format);
+        }
+    }
+    
+    if(config->hasKey("colors") && config->asDictionary()["colors"].isDictionary()) {
+        DataObject * colors = &config->asDictionary()["colors"];
+        for(auto & color : colors->asDictionary()) {
+            if(color.second.isString()) {
+                this->setColors(color.first, color.second.asString());
             }
-            
-            if(loggerConfig->hasKey("format") && loggerConfig->asDictionary()["format"].isString()) {
-                std::string format = loggerConfig->asDictionary()["format"].asString();
-                try {
-                    this->nexisLogger->set_pattern(format);
-                } catch (const spdlog::spdlog_ex &ex) {
-                    this->warn("Invalid log format: " + format);
+        }
+    }
+}
+
+void nexis::NexisLoggerSpd::setLevel(const std::string& level) {
+    this->nexisLogger->set_level(spdlog::level::from_str(level));
+}
+
+void nexis::NexisLoggerSpd::setFormat(const std::string& format) {
+    this->nexisLogger->set_pattern(format);
+}
+
+void nexis::NexisLoggerSpd::setColors(const std::string& level, const std::string& color) {
+    if(color == "black") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->black);
+    } else if (color == "red") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->red);
+    } else if (color == "green") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->green);
+    } else if (color == "yellow") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->yellow);
+    } else if (color == "blue") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->blue);
+    } else if (color == "magenta") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->magenta);
+    } else if (color == "cyan") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->cyan);
+    } else if (color == "white") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->white);
+    } else if (color == "yellow bold") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->yellow_bold);
+    } else if (color == "red bold") {
+        this->nexis_sink->set_color(spdlog::level::from_str(level), this->nexis_sink->red_bold);
+    } else {
+        this->warn("Invalid color: " + color);
+    }
+   
+}
+
+void nexis::NexisLoggerSpd::setColors(DataObject * config) {
+    if(config->isDictionary()) {
+        if(config->hasKey("colors") && config->asDictionary()["colors"].isDictionary()) {
+            DataObject * colors = &config->asDictionary()["colors"];
+            for(auto & color : colors->asDictionary()) {
+                if(color.second.isString()) {
+                    this->setColors(color.first, color.second.asString());
                 }
             }
         }

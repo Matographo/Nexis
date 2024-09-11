@@ -81,8 +81,5 @@ bool DataObject::isList() const {
 }
 
 bool DataObject::hasKey(const std::string& key) {
-    if(!isDictionary()) {
-        return false;
-    }
-    return asDictionary().find(key) != asDictionary().end();
+    return isDictionary() && this->asDictionary().find(key) != asDictionary().end();
 }
