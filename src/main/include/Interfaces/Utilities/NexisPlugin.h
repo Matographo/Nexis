@@ -11,6 +11,7 @@ public:
     NexisPlugin(nexis::NexisLogger * logger, DataObject * dataObject) : logger(logger), dataObject(dataObject) {
         addInterface("NexisPlugin");
     }
+    NexisPlugin(const NexisPlugin&) = default;
     
     virtual ~NexisPlugin() = default;
 

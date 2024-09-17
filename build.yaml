@@ -1,5 +1,10 @@
 projectName: NexisNex
+language: C++
+type: program
+
 includes: on
 
 include: 
   logger: "config/Nexis/Logger.yaml"
+  plugins: "config/Plugins/Plugins.yaml"
+  compiler: "config/Nexis/Compiler.yaml"

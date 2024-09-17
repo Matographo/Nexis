@@ -85,34 +85,14 @@ int Cpp_Compiler::compileLibrary(std::string libraryPath) {
         return 0;
     }
     
-    std::string binPath = this->projectPath + "/build/bin/libs/" + std::filesystem::path(libraryPath).filename().string();
-    if(!std::filesystem::exists(binPath)) {
-        std::filesystem::create_directories(binPath);
-    }
+    std::string binPath = this->projectPath + "/build/bin/" + std::filesystem::path(libraryPath).filename().string() + ".so";
     
-    this->libBinPaths.push_back(binPath + "/*.o");
-    
-    bool oneSuccess = false;
-    for(std::string cppFilePath : cppFiles) {
-        std::string fileName = std::filesystem::absolute(cppFilePath).filename().stem();
-        if(!this->isFileUpToDate(cppFilePath, binPath + "/" + fileName + ".o")) {
-            std::string fileName = std::filesystem::path(cppFilePath).stem();
-            std::string command  = this->compilerName + " " + includeString + " -c " + cppFilePath + " -o " + binPath + "/" + fileName + ".o 2&>1 /dev/null";
-            logger->debug("Compiling C++ file in Lib: " + cppFilePath);
-            logger->trace("Compile Command in Lib: " + command);
-            int result = system(command.c_str());
-            if(result != 0) {
-                this->logger->warn("Failed to compile C++ file in Lib: " + cppFilePath);
-            } else {
-                oneSuccess = true;
-            }
-        } else {
-            oneSuccess = true;
-        }
+    std::string allPaths = "";
+    for(std::string cppFile : this->cppFilePaths) {
+        allPaths += cppFile + " ";
     }
-    if(!oneSuccess) {
-        this->libBinPaths.pop_back();
-    }
+
+    std::string command = this->compilerName + " -fPIC -shared " + includeString + " -o " + binPath + ".so " + allPaths;
     return 0;
 }
  
