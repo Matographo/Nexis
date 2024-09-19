@@ -13,7 +13,9 @@ public:
     using List       = std::vector<DataObject>;
     using Value      = std::variant<int, float, bool, std::string, Dictionary, List>;
     
-    DataObject() : value("") {}
+    DataObject();
+    DataObject(const DataObject& other);
+    ~DataObject();
 
     // Privater Konstruktor, damit Instanzen nur über die statische Methode erstellt werden können
     explicit DataObject(Value v) : value(v) {}

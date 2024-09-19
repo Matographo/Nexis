@@ -1,5 +1,12 @@
 #include "DataObject.h"
 
+DataObject::DataObject() : value(0) {}
+
+DataObject::~DataObject() {
+}
+
+DataObject::DataObject(const DataObject& other) : value(other.value) {}
+
 DataObject DataObject::createInt(int v) {
     return DataObject(v);
 }

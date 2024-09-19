@@ -49,7 +49,7 @@ public:
     int processConfigs();
     int loadPlugins();
     int loadDependencies();
-    int executeTasks();
+    int executeTasks(int lifecycleTasks);
     
     std::string getProjectType();
 };

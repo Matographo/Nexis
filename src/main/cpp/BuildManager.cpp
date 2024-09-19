@@ -8,9 +8,6 @@ BuildManager::BuildManager() {
 }
 
 BuildManager::~BuildManager() {
-    delete this->config;
-    delete this->logger;
-    spdlog::shutdown();
 }
 
 void BuildManager::startMessage() {
@@ -302,9 +299,9 @@ int BuildManager::loadDependencies() {
     return 0;
 }
 
-int BuildManager::executeTasks() {
+int BuildManager::executeTasks(int lifecycleTasks) {
     LifecycleExecuter lifecycleExecuter(this->plugins, this->logger);
-    int result = lifecycleExecuter.startLifecycle(44);
+    int result = lifecycleExecuter.startLifecycle(lifecycleTasks);
     if(result != 0) {
         this->logger->err("There Occurred an Error in Build Cycle");
     }
