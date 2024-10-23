@@ -8,7 +8,7 @@
 #include "yaml-cpp/yaml.h"
 #include "FileReader.h"
 
-DataObject parseYaml(const std::string& base_pathe);
+DataObject parseYaml(const std::string& base_path);
 
 
 

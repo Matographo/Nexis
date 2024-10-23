@@ -27,6 +27,7 @@ private:
     std::string projectPath;
     std::string projectType;
     std::vector<std::tuple<std::string, DataObject*>> pluginPaths;
+    std::vector<std::tuple<std::string, std::string, std::string, bool> pluginsToInstall;
     std::vector<NexisPlugin*> pluginsS;
     PluginStruct * plugins;
     
@@ -38,6 +39,7 @@ private:
     void loadPluginsConfig();
     void loadExecuterConfig();
     int checkConfig();
+    int installAllPlugins();
 public:
     BuildManager();
     ~BuildManager();

@@ -175,12 +175,16 @@ void BuildManager::loadPluginsConfig() {
             }
             std::string pluginName = plugin.asDictionary()["name"].asString();
             std::string pluginVersion = plugin.asDictionary()["version"].asString();
+            
+            std::tuple<std::string, std::string, std::string, bool> plugin = std::make_tuple(pluginLanguage, pluginName, pluginVersion, false);
+            if(pluginVersion.find(".") != std::string::npos) {
+                std::get<2>(plugin) = true;
+            }
+            this->pluginsToInstall.push_back(plugin);
             std::string homePath = std::getenv("HOME");
-            std::string pluginPath = homePath + "/.nexis/plugins/" + this->projectType + "/" + pluginLanguage.asString() + "/" + pluginName + "/" + pluginVersion + "/" + pluginName + ".so";
+            std::string pluginPath = homePath + "/.nxpm/plugins/" + this->projectType + "/" + pluginLanguage.asString() + "/" + pluginName + "/" + pluginVersion + "/build/result/" + pluginName + ".so";
             this->pluginPaths.push_back(std::make_tuple(pluginPath, &plugin));
         }
-        
-
     }
 }
 
@@ -206,13 +210,7 @@ void BuildManager::loadExecuterConfig() {
     } else if(this->config->asDictionary()["language"].isList()) {
         languageList = this->config->asDictionary()["language"].asList();
     } else {
-        this->logger->err("Invalid language configuration");
-        return;
-    }
-    
-    for(auto& language : languageList) {
-        if(!executerConfig->hasKey(language.asString())) {
-            this->logger->err("Executer configuration for " + language.asString() + " is not defined");
+        this->logger->err("Invalid language configuration");+ " is not defined");
             return;
         }
         DataObject * languageConfig = &executerConfig->asDictionary()[language.asString()];
@@ -276,6 +274,7 @@ void BuildManager::loadLoggerConfig() {
 
 int BuildManager::loadPlugins() {
     nexis::NexisLogger * pluginLogger = this->logger;
+    this->installAllPlugins();
     PluginCaster pluginCaster(pluginLogger, this->plugins);
     for(std::tuple<std::string, DataObject*>& pluginTuple : this->pluginPaths) {
         std::string pluginPath = std::get<0>(pluginTuple);
@@ -296,6 +295,57 @@ int BuildManager::loadPlugins() {
 }
 
 int BuildManager::loadDependencies() {
+    std::string homePath = std::getenv("HOME");
+    std::string nxpmVersion = "nxpm --version > /dev/null 2>&1";
+    
+    if(system(nxpmVersion.c_str()) != 0) {
+        this->logger->err("Nxpm is not installed. Please install it to continue");
+        return 1;
+    }
+    
+    if(!this->config->hasKey("dependencies")) {
+        return 0;
+    }
+
+    DataObject * dependencies = &this->config->asDictionary()["dependencies"];
+    
+    if(!dependencies->isDictionary()) {
+        this->logger->err("Invalid dependencies configuration");
+        return 1;
+    }
+    
+    for(auto& dependencyLanguage : dependencies->asDictionary()) {
+        if(!dependencyLanguage.second.isList()) {
+            this->logger->err("Invalid dependencies configuration");
+            return 1;
+        }
+
+        for(auto& dependency : dependencyLanguage.second.asList()) {
+            if(!dependency.isDictionary()) {
+                this->logger->err("Invalid dependencies configuration");
+                return 1;
+            }
+            if(!dependency.hasKey("name") || !dependency.hasKey("version")) {
+                this->logger->err("Dependency Name or Version not defined");
+                return 1;
+            }
+            std::string dependencyName = dependency.asDictionary()["name"].asString();
+            std::string dependencyVersion = "";
+            if(dependency.hasKey("version")) {
+                dependencyVersion = dependency.asDictionary()["version"].asString();
+            }
+            std::string nxpmInstall = "nxpm " + dependencyLanguage.first + " install " + dependencyName;
+
+            if(dependencyVersion != "") {
+                nxpmInstall += "@" + dependencyVersion;
+            }
+
+            if(system(nxpmInstall.c_str()) != 0) {
+                this->logger->err("Could not install Dependency: " + dependencyName);
+                return 1;
+            }
+        }
+    }
     return 0;
 }
 
@@ -310,4 +360,31 @@ int BuildManager::executeTasks(int lifecycleTasks) {
 
 std::string BuildManager::getProjectType() {
     return this->projectType;
+}
+
+int BuildManager::installAllPlugins() {
+    std::string homePath = std::getenv("HOME");
+    std::string nxpmVersion = "nxpm --version > /dev/null 2>&1";
+    
+    if(system(nxpmVersion.c_str()) != 0) {
+        this->logger->err("Nxpm is not installed. Please install it to continue");
+        return 1;
+    }
+    
+    for(std::tuple<std::string, std::string, bool>& plugin : this->pluginsToInstall) {
+        std::string pluginLanguage = std::get<0>(plugin);
+        std::string pluginName = std::get<1>(plugin);
+        std::string pluginVersion = std::get<2>(plugin);
+        std::string nxpmInstall = "nxpm " + pluginLanguage + " install " + pluginName;
+        
+        if(std::get<3>(plugin)) {
+            nxpmInstall += "@" + pluginVersion;
+        }
+        
+        if(system(nxpmInstall.c_str()) != 0) {
+            this->logger->err("Could not install Plugin: " + pluginName);
+            return 1;
+        }
+    }
+    return 0;
 }

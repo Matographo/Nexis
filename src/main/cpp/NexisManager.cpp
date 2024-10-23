@@ -17,6 +17,50 @@ NexisManager::~NexisManager() {
     spdlog::shutdown();
 }
 
+void NexisManager::startMessage() {
+    this->logger->info("");
+    this->logger->info("------------------------------------------------------------------------");
+    this->logger->setFormat("%^%v%$");
+    this->logger->info(" Starting Nexis Build...");
+    this->logger->setFormat("%v");
+    this->logger->info("------------------------------------------------------------------------");
+    this->logger->info("");
+    this->logger->setFormat("%^%v%$");
+}
+
+void NexisManager::endMessage(int returnCode) {
+    this->buildTime.stop = std::chrono::high_resolution_clock::now();
+    this->logger->setFormat("%v");
+    this->logger->setColors("info", "green");
+    this->logger->setColors("err", "red");
+    this->logger->info("");
+    this->logger->info("------------------------------------------------------------------------");
+    this->logger->setFormat("%^%v%$");
+    if(returnCode == 0) {
+        this->logger->info(" BUILD SUCCESSFUL ");
+    } else {
+        this->logger->err(" BUILD FAILED ");
+    }
+    this->logger->setFormat("%v");
+    this->logger->info(" Total time: " + this->calcBulidTime());
+    this->logger->info(" Finished at: " + this->calcEndTime());
+    this->logger->info("------------------------------------------------------------------------");
+    this->logger->info("");
+}
+
+std::string NexisManager::calcBulidTime() {
+    std::chrono::nanoseconds duration = std::chrono::duration_cast<std::chrono::nanoseconds>(this->buildTime.stop - this->buildTime.start);
+    return formatDuration(duration);
+}
+
+std::string NexisManager::calcEndTime() {
+    std::time_t now = std::chrono::system_clock::to_time_t(this->buildTime.stop);
+    std::tm * ptm = std::localtime(&now);
+    std::ostringstream oss;
+    oss << std::put_time(ptm, "%Y-%m-%d %H:%M:%S");
+    return oss.str();
+}
+
 void NexisManager::setArguments(int argc, char** argv) {
     
     argparse::ArgumentParser* phases         = new argparse::ArgumentParser("phase");
@@ -86,12 +130,18 @@ int NexisManager::makeChoice() {
         return this->createProject();
     } 
     
+    this->startMessage();
+    
     this->loadConfig();
     this->processConfig();
     
+    int result = 0;
+    
     if(this->program->is_subcommand_used("phase")) {
-        return this->executeLifecycle();
+        result = this->executeLifecycle();
     }
+    
+    this->endMessage(result);
     
     return 0;
 }

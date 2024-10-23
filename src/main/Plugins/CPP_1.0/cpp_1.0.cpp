@@ -98,7 +98,7 @@ int Cpp_Compiler::compileLibrary(std::string libraryPath) {
  
 
 
-Cpp_Compiler::Cpp_Compiler(nexis::NexisLogger *logger, DataObject *dataObject) : NexisPlugin(logger, dataObject) {
+Cpp_Compiler::Cpp_Compiler(nexis::NexisLogger *logger, DataObject *config, DataObject *properties) : NexisPlugin(logger, config, properties) {
 }
 
 Cpp_Compiler::~Cpp_Compiler() {
@@ -109,10 +109,10 @@ int Cpp_Compiler::preCompile() {
     this->resultPath = this->projectPath + "/build/result";
     this->srcPath    = this->projectPath + "/src/main/cpp";
 
-    if(!this->dataObject->hasKey("projectName")) {
+    if(!this->config->hasKey("projectName")) {
         this->projectName = "cpp_project";
     } else {
-        this->projectName = this->dataObject->asDictionary().at("projectName").asString();
+        this->projectName = this->config->asDictionary().at("projectName").asString();
     }
 
     if(!std::filesystem::exists(this->srcPath)) {
@@ -176,15 +176,15 @@ int Cpp_Compiler::compile() {
 }
 
 int Cpp_Compiler::validate() {
-    if(!this->dataObject) {
+    if(!this->config) {
         this->logger->err("C++ compiler has no configuration data");
         return 1;
     }
-    if(!this->dataObject->hasKey("projectPath")) {
+    if(!this->config->hasKey("projectPath")) {
         this->logger->err("C++ compiler could not find project path");
         return 1;
     } else {
-        this->projectPath = this->dataObject->asDictionary().at("projectPath").asString();
+        this->projectPath = this->config->asDictionary().at("projectPath").asString();
     }
     return 0;
 }
@@ -205,8 +205,8 @@ int Cpp_Compiler::package() {
     return 0;
 }
 
-extern "C" NexisPlugin * createPlugin(nexis::NexisLogger * logger, DataObject * dataObject) {
-    return new Cpp_Compiler(logger, dataObject);
+extern "C" NexisPlugin * createPlugin(nexis::NexisLogger * logger, DataObject * config, DataObject * properties) {
+    return new Cpp_Compiler(logger, config, properties);
 }
 
 extern "C" void destroyPlugin(NexisPlugin * plugin) {

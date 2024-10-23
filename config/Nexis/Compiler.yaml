@@ -1,4 +1,4 @@
-C++:
+cpp:
   name: nexis_g++
   version: 1.0.0
   output: NexisNex

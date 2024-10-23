@@ -8,7 +8,7 @@
 
 class NexisPlugin : public virtual NexisInterfaceRegistry {
 public:
-    NexisPlugin(nexis::NexisLogger * logger, DataObject * dataObject) : logger(logger), dataObject(dataObject) {
+    NexisPlugin(nexis::NexisLogger * logger, DataObject * config, DataObject * properties) : logger(logger), config(config), properties(properties) {
         addInterface("NexisPlugin");
     }
     NexisPlugin(const NexisPlugin&) = default;
@@ -17,7 +17,8 @@ public:
 
 protected:
     nexis::NexisLogger * logger;
-    DataObject * dataObject;
+    DataObject * config;
+    DataObject * properties;
 };
 
 #endif

@@ -3,11 +3,11 @@
 
 #include <string>
 #include <memory>
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/basic_file_sink.h>
+#include "spdlog/spdlog.h"
+#include "spdlog/sinks/basic_file_sink.h"
 #include "Interfaces/Utilities/NexisLogger.h"
 #include "DataObject.h"
-#include <spdlog/sinks/stdout_color_sinks.h> // Für das Loggen in die Konsole
+#include "spdlog/sinks/stdout_color_sinks.h" // Für das Loggen in die Konsole
 
 
 namespace nexis {

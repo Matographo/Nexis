@@ -1,0 +1,107 @@
+input:
+  path: build/result
+  files:
+    - /path/to/file1.yaml
+    - /path/to/file2.csv
+    - /path/to/file3.json
+  text:
+    - "Hello, World!"
+    - "Goodbye, World!"
+  textFile: /path/to/textFile.txt
+
+toolset:
+  kingTool:
+    tools:
+      - tool: "yaml2csv"
+        version: "1.0.0"
+        option:
+          quiet: true
+          verbose: false
+        filter: "file_extension == 'yaml'"
+      - tool: "csv2json"
+        filter: "file_extension == 'csv'"
+
+  tool2:
+    tool: "csv2json"
+    version: "1.0.0"
+    option:
+      quiet: true
+      verbose: false
+    filter: "file_extension == 'csv'"
+  tool3:
+    tool: "json2yaml"
+    version: "1.0.0"
+    option:
+      quiet: true
+      verbose: false
+    filter: "file_extension == 'json'"
+
+workflow:
+  tool0:
+    tools:
+      - tool: "yaml2csv"
+        version: "1.0.0"
+        option:
+          quiet: true
+          verbose: false
+        filter: "file_extension == 'yaml'"
+      - tool2
+      - tool3
+    next: tool4
+
+  tool1:
+    tool: "yaml2csv"
+    version: "1.0.0"
+    option:
+      quiet: true
+      verbose: false
+    filter: "file_extension == 'yaml'"
+    next: tool2
+
+  tool2:
+    next:
+      - if: "file exists"
+        next: tool3
+      - if: "file does not exist"
+        next: tool4
+      - if:
+        next: tool5
+      - tool6
+
+  tool3:
+    next:
+      - when: "file exists"
+        next: tool4
+      - when: "file does not exist"
+        next: tool5
+      - when:
+        next: tool7
+      - tool6
+
+  tool4:
+    tool: "csv2json"
+    next: tool5
+
+  tool5:
+    tool: "json2yaml"
+    next: tool6
+
+  tool6:
+    tool: "yaml2json"
+    next: tool7
+
+  tool7:
+    tool: "json2csv"
+    next: tool8
+
+  tool8:
+    tools:
+      - csv2json
+      - json2yaml
+      - yaml2json
+      - json2csv
+      - yaml2csv
+      - csv2yaml
+      - json2json
+      - yaml2yaml
+      - csv2csv

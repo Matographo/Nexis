@@ -15,7 +15,7 @@
 class Cpp_Compiler : public NexisPlugin, public CompileTask, public ValidateTask, 
                      public PackageTask, public PreCompileTask {
   public:
-    Cpp_Compiler(nexis::NexisLogger *logger, DataObject *dataObject);
+    Cpp_Compiler(nexis::NexisLogger *logger, DataObject *config, DataObject *properties);
     Cpp_Compiler(Cpp_Compiler &&) = default;
     Cpp_Compiler(const Cpp_Compiler &) = default;
     Cpp_Compiler &operator=(Cpp_Compiler &&) = default;
